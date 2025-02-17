@@ -1,0 +1,45 @@
+name: Build and Push App to ECR
+
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'corretto' 
+        java-version: '21'
+        cache: 'gradle'
+        cache-dependency-path: | # optional
+          *.gradle*
+          */**/gradle-wrapper.properties
+    - name: Build app
+      run: ./mvnw clean package -DskipTests
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        role-to-assume: arn:aws:iam::${{vars.AWS_ACCOUNT_ID}}:role/${{vars.ROLE_NAME}}
+        aws-region: ${{ vars.AWS_REGION }}
+    - name: Log in to Amazon ECR
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Build Docker image
+      run: docker build -t ${{ vars.ECR_REPO_URI }}:latest .
+
+    - name: Tag Docker image with commit SHA
+      run: docker tag ${{ vars.ECR_REPO_URI }}:latest ${{ vars.ECR_REPO_URI }}:${{ github.sha }}
+
+    - name: Push Docker image to Amazon ECR
+      run: |
+        docker push ${{ vars.ECR_REPO_URI }}:latest
+        docker push ${{ vars.ECR_REPO_URI }}:${{ github.sha }}
