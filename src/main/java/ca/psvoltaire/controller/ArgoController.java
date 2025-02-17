@@ -1,6 +1,7 @@
 package ca.psvoltaire.controller;
 
 import ca.psvoltaire.dto.ArgoApplication;
+import ca.psvoltaire.job.EventWatcherJob;
 import ca.psvoltaire.service.ArgoService;
 import io.kubernetes.client.openapi.ApiException;
 import io.micronaut.http.MediaType;
@@ -13,10 +14,11 @@ import java.util.List;
 @Controller("/") // (1)
 public class ArgoController {
     private final ArgoService argoService;
-
+    private final EventWatcherJob eventWatcherJob;
     @Inject
-    public ArgoController(ArgoService argoService) {
+    public ArgoController(ArgoService argoService, EventWatcherJob eventWatcherJob) {
         this.argoService = argoService;
+        this.eventWatcherJob = eventWatcherJob;
     }
 
     @Get(uri = "ns", produces = MediaType.APPLICATION_JSON)
