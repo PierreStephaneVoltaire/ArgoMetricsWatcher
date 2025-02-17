@@ -19,12 +19,6 @@ jobs:
       with:
         distribution: 'corretto' 
         java-version: '21'
-        cache: 'gradle'
-        cache-dependency-path: | # optional
-          *.gradle*
-          */**/gradle-wrapper.properties
-    - name: Build app
-      run: ./mvnw clean package -DskipTests
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
@@ -32,14 +26,7 @@ jobs:
         aws-region: ${{ vars.AWS_REGION }}
     - name: Log in to Amazon ECR
       uses: aws-actions/amazon-ecr-login@v2
-
     - name: Build Docker image
-      run: docker build -t ${{ vars.ECR_REPO_URI }}:latest .
+      run:   ./gradlew dockerPush
 
-    - name: Tag Docker image with commit SHA
-      run: docker tag ${{ vars.ECR_REPO_URI }}:latest ${{ vars.ECR_REPO_URI }}:${{ github.sha }}
 
-    - name: Push Docker image to Amazon ECR
-      run: |
-        docker push ${{ vars.ECR_REPO_URI }}:latest
-        docker push ${{ vars.ECR_REPO_URI }}:${{ github.sha }}
