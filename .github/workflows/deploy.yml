@@ -19,15 +19,10 @@ jobs:
       with:
         distribution: 'corretto' 
         java-version: '21'
-
-    - name: Cache dependencies
-      uses: actions/cache@v4
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
-
+        cache: 'gradle'
+        cache-dependency-path: | # optional
+          *.gradle*
+          */**/gradle-wrapper.properties
     - name: Build app
       run: ./mvnw clean package -DskipTests
     - name: Configure AWS Credentials
