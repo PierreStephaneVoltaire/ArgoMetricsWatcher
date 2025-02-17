@@ -26,6 +26,8 @@ jobs:
       with:
         distribution: 'corretto' 
         java-version: '21'
+    - name: Build
+      run: ./gradlew  shadowJar 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
