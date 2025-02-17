@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argoMetricsWatcher
+  name: argo-metrics
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/PierreStephaneVoltaire/ArgoMetricsWatcher
-    path: infra
+    path: infra/ArgoMetricsWatcher
     targetRevision: HEAD
     helm:
       valueFiles:
