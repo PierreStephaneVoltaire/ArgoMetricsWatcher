@@ -15,6 +15,7 @@ import java.util.List;
 public class ArgoController {
     private final ArgoService argoService;
     private final EventWatcherJob eventWatcherJob;
+
     @Inject
     public ArgoController(ArgoService argoService, EventWatcherJob eventWatcherJob) {
         this.argoService = argoService;

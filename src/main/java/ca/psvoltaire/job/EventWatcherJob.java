@@ -1,4 +1,5 @@
 package ca.psvoltaire.job;
+
 import ca.psvoltaire.service.ArgoService;
 import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.models.CoreV1Event;
@@ -27,9 +28,9 @@ public class EventWatcherJob {
             namespaces = argoService.getAllNameSpaces();
             log.info("Namespaces in cluster: {}", namespaces);
             for (String namespace : namespaces) {
-               for (CoreV1Event event : argoService.getNameSpacedEvents(namespace).getItems()){
-                   log.info(event.toString());
-               }
+                for (CoreV1Event event : argoService.getNameSpacedEvents(namespace).getItems()) {
+                    log.info(event.toString());
+                }
             }
         } catch (ApiException e) {
             throw new RuntimeException(e);

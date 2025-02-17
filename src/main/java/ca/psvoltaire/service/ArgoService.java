@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
 @Slf4j
 @Singleton
 public class ArgoService {
@@ -46,6 +47,7 @@ public class ArgoService {
         ArgoApplicationList list = gson.fromJson(json, ArgoApplicationList.class);
         return list.getItems();
     }
+
     public List<ArgoApplication> getNameSpacedApplications(String namespace) throws ApiException {
         var applicationList = this.customObjectsApi.listNamespacedCustomObject(
                 "argoproj.io",
@@ -58,12 +60,13 @@ public class ArgoService {
         ArgoApplicationList list = gson.fromJson(json, ArgoApplicationList.class);
         return list.getItems();
     }
+
     public CoreV1EventList getNameSpacedEvents(String namespace) throws ApiException {
 
         return this.coreV1Api.listNamespacedEvent(
                 namespace,
                 "true",
-null,                null,
+                null, null,
 
                 null,
                 null, null, null, null, null, null, null
