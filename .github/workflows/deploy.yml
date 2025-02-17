@@ -19,14 +19,3 @@ jobs:
       with:
         distribution: 'corretto' 
         java-version: '21'
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v3
-      with:
-        role-to-assume: arn:aws:iam::${{vars.AWS_ACCOUNT_ID}}:role/${{vars.ROLE_NAME}}
-        aws-region: ${{ vars.AWS_REGION }}
-    - name: Log in to Amazon ECR
-      uses: aws-actions/amazon-ecr-login@v2
-    - name: Build Docker image
-      run:   ./gradlew dockerPush
-
-
