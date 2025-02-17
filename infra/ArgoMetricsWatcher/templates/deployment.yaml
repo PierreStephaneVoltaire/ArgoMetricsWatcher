@@ -6,8 +6,14 @@ metadata:
   labels:
     app: {{ .Values.name }}
 spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
   replicas: {{ .Values.replicaCount }}
   template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
     spec:
       serviceAccountName: {{ .Values.serviceAccountName }}
       containers:
