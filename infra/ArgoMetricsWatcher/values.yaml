@@ -1,4 +1,4 @@
-name: ArgoMetricsWatcher
+name: argo-metrics-watcher
 replicaCount: 1
 image:
   repository: "429310424269.dkr.ecr.ca-central-1.amazonaws.com/argo-metrics-watcher"

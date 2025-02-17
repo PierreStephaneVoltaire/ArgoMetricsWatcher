@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{.Values.name|lower}}-role
+  name: {{.Values.name}}-role
   annotations:
     helm.sh/hook: pre-install
     helm.sh/hook-weight: "-3"
