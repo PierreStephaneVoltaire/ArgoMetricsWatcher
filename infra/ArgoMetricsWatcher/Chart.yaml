@@ -1,8 +1,8 @@
 apiVersion: v2
-name: my-app
+name: ArgoMetricsWatcher
 version: 1.0.0
 
 dependencies:
   - name: kafka
-    version: 23.3.0
+    version:  31.3.1
     repository: https://charts.bitnami.com/bitnami

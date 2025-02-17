@@ -1,0 +1,34 @@
+name: ArgoMetricsWatcher
+replicaCount: 1
+image:
+  repository: "429310424269.dkr.ecr.ca-central-1.amazonaws.com/argo-metrics-watcher"
+  tag: latest
+resources:
+  limits:
+    memory: 1Gi
+    cpu: 256m
+  requests:
+    memory: 1Gi
+    cpu: 256m
+
+metrics:
+  serviceMonitor:
+    enabled: true
+  jmx:
+    enabled: true
+
+kafka:
+  serviceAccount:
+    create: true
+  rbac:
+    create: true
+
+zookeeper:
+  replicas: 3
+  metrics:
+    enabled: true
+  storage:
+    size: 70Gi
+    class: gp3
+
+

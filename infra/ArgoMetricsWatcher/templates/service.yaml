@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.name }}
+  namespace: argometricswatcher
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: "TCP"
+      port: 8080
