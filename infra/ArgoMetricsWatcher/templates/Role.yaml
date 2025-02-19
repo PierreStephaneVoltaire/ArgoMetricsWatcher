@@ -8,7 +8,7 @@ metadata:
 
 rules:
   - apiGroups: [ "" ]
-    resources: [ "events" ]
+    resources: [ "events" , "namespaces"]
     verbs: [ "get", "list", "watch" ]
   - apiGroups: [ "argoproj.io" ]
     resources: [ "applications", "appprojects" ]
