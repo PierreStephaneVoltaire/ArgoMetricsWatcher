@@ -17,6 +17,7 @@ import java.util.List;
 
 @Controller("/") // (1)
 public class ArgoController {
+    private final static URI SWAGGER_UI = UriBuilder.of("/swagger-ui").path("index.html").build();
     private final ArgoService argoService;
     private final EventWatcherJob eventWatcherJob;
 
@@ -35,7 +36,7 @@ public class ArgoController {
         }
     }
 
-    @Get(uri = "apps",produces = MediaType.APPLICATION_JSON)
+    @Get(uri = "apps", produces = MediaType.APPLICATION_JSON)
     public List<ArgoApplication> index() {
         try {
             return this.argoService.getAllApplications();
@@ -43,7 +44,7 @@ public class ArgoController {
             throw new RuntimeException(e);
         }
     }
-    private final static URI SWAGGER_UI = UriBuilder.of("/swagger-ui").path("index.html").build();
+
     @Get
     @Hidden
     HttpResponse<?> home() {
