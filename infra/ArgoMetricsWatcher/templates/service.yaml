@@ -5,6 +5,9 @@ metadata:
   namespace: argometricswatcher
 spec:
   type: LoadBalancer
+  selector:
+    app: {{ .Values.name }}
   ports:
     - protocol: "TCP"
       port: 8080
+      targetPort: 8080  
