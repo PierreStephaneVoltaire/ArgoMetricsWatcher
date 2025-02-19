@@ -15,7 +15,10 @@ repositories {
 
 dependencies {
     annotationProcessor("io.micronaut.data:micronaut-data-document-processor")
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
+
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor("io.micronaut:micronaut-http-validation")
