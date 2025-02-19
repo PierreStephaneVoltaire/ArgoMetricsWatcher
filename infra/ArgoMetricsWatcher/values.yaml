@@ -28,7 +28,10 @@ kafka:
       type: LoadBalancer
     autoDiscovery:
       enabled: true
-
+  controller:
+    automountServiceAccountToken: true
+  broker:
+    automountServiceAccountToken: true
 zookeeper:
   replicas: 3
   metrics:
