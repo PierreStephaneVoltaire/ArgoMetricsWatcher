@@ -15,7 +15,7 @@ spec:
       labels:
         app: {{ .Values.name }}
     spec:
-      serviceAccountName: {{ .Values.serviceAccountName }}
+      serviceAccountName: {{.Values.name}}-sa
       containers:
         - name: {{ .Values.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
