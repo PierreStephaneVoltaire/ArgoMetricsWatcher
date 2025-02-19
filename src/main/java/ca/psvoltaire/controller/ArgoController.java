@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
 import java.util.List;
+
 @Slf4j
 @Controller("/") // (1)
 public class ArgoController {
@@ -40,7 +41,7 @@ public class ArgoController {
     public HttpResponse<List<ArgoApplication>> index() {
         try {
             return HttpResponse.ok(this.argoService.getAllApplications());
-        }  catch (ApiException e) {
+        } catch (ApiException e) {
             log.error(e.getMessage(), e);
             return HttpResponse.serverError();
         }

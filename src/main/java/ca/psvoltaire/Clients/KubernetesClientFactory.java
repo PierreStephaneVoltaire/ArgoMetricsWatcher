@@ -18,16 +18,18 @@ import java.io.IOException;
 
 public class KubernetesClientFactory {
     private final ApiClient client;
-    public KubernetesClientFactory(AppConfig appConfig)  {
-        boolean islocal=appConfig.isIslocal();
+
+    public KubernetesClientFactory(AppConfig appConfig) {
+        boolean islocal = appConfig.isIslocal();
         log.info("islocal: {}", islocal);
         try {
-            if (islocal) {               this.client = ClientBuilder.defaultClient();
-            }
-            else {            this.client = ClientBuilder.cluster().build();
+            if (islocal) {
+                this.client = ClientBuilder.defaultClient();
+            } else {
+                this.client = ClientBuilder.cluster().build();
             }
             Configuration.setDefaultApiClient(client);
-        } catch ( IOException e) {
+        } catch (IOException e) {
             log.error(e.getMessage());
             throw new RuntimeException("Failed to initialize Kubernetes client", e);
         }

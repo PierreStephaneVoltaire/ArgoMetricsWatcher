@@ -15,38 +15,38 @@ jobs:
       id-token: write
       contents: read
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Clean permissions
-      run:  chmod +x ./gradlew
-    - name: Install Podman
-      run: sudo apt-get update && sudo apt-get install -y podman
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'corretto' 
-        java-version: '21'
-    - name: Build
-      run: ./gradlew  shadowJar 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v3
-      with:
-        role-to-assume: arn:aws:iam::${{vars.AWS_ACCOUNT_ID}}:role/${{vars.ROLE_NAME}}
-        aws-region: ${{ vars.AWS_REGION }}
-    - name: Authenticate Podman to ECR
-      run: |
-        export AWS_ACCOUNT_ID=${{ vars.AWS_ACCOUNT_ID }}
-        export AWS_REGION=${{ vars.AWS_REGION }}
-        export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-        aws ecr get-login-password --region $AWS_REGION | podman login --username AWS --password-stdin $ECR_REGISTRY
-    - name: Build Docker And Push To Ecr
-      run: |
-        export AWS_ACCOUNT_ID=${{ vars.AWS_ACCOUNT_ID }}
-        export AWS_REGION=${{ vars.AWS_REGION }}
-        export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-        export IMAGE_NAME="argo-metrics-watcher"
-        export IMAGE_TAG="latest"
-        export IMAGE_COMMIT_TAG="${{ github.sha }}"
-        podman build -t $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG -t $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_COMMIT_TAG .
-        podman push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
-        podman push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_COMMIT_TAG        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Clean permissions
+        run: chmod +x ./gradlew
+      - name: Install Podman
+        run: sudo apt-get update && sudo apt-get install -y podman
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+      - name: Build
+        run: ./gradlew  shadowJar
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::${{vars.AWS_ACCOUNT_ID}}:role/${{vars.ROLE_NAME}}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Authenticate Podman to ECR
+        run: |
+          export AWS_ACCOUNT_ID=${{ vars.AWS_ACCOUNT_ID }}
+          export AWS_REGION=${{ vars.AWS_REGION }}
+          export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+          aws ecr get-login-password --region $AWS_REGION | podman login --username AWS --password-stdin $ECR_REGISTRY
+      - name: Build Docker And Push To Ecr
+        run: |
+          export AWS_ACCOUNT_ID=${{ vars.AWS_ACCOUNT_ID }}
+          export AWS_REGION=${{ vars.AWS_REGION }}
+          export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+          export IMAGE_NAME="argo-metrics-watcher"
+          export IMAGE_TAG="latest"
+          export IMAGE_COMMIT_TAG="${{ github.sha }}"
+          podman build -t $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG -t $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_COMMIT_TAG .
+          podman push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+          podman push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_COMMIT_TAG        

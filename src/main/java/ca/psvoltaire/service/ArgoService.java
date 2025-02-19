@@ -1,8 +1,8 @@
 package ca.psvoltaire.service;
 
+import ca.psvoltaire.Clients.KubernetesClientFactory;
 import ca.psvoltaire.dto.ArgoApplication;
 import ca.psvoltaire.dto.ArgoApplicationList;
-import ca.psvoltaire.Clients.KubernetesClientFactory;
 import com.google.gson.Gson;
 import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
