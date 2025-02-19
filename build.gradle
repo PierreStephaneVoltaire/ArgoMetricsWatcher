@@ -18,6 +18,8 @@ dependencies {
     annotationProcessor("io.micronaut.openapi:micronaut-openapi")
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
+    runtimeOnly("org.yaml:snakeyaml")
+    testImplementation("org.testcontainers:kafka")
 
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

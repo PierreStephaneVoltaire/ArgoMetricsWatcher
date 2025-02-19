@@ -11,37 +11,38 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.uri.UriBuilder;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
 import java.util.List;
-
+@Slf4j
 @Controller("/") // (1)
 public class ArgoController {
     private final static URI SWAGGER_UI = UriBuilder.of("/swagger-ui").path("index.html").build();
     private final ArgoService argoService;
-    private final EventWatcherJob eventWatcherJob;
 
     @Inject
     public ArgoController(ArgoService argoService, EventWatcherJob eventWatcherJob) {
         this.argoService = argoService;
-        this.eventWatcherJob = eventWatcherJob;
     }
 
     @Get(uri = "ns", produces = MediaType.APPLICATION_JSON)
-    public List<String> ns() {
+    public HttpResponse<List<String>> ns() {
         try {
-            return this.argoService.getAllNameSpaces();
+            return HttpResponse.ok(this.argoService.getAllNameSpaces());
         } catch (ApiException e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage(), e);
+            return HttpResponse.serverError();
         }
     }
 
     @Get(uri = "apps", produces = MediaType.APPLICATION_JSON)
-    public List<ArgoApplication> index() {
+    public HttpResponse<List<ArgoApplication>> index() {
         try {
-            return this.argoService.getAllApplications();
-        } catch (ApiException e) {
-            throw new RuntimeException(e);
+            return HttpResponse.ok(this.argoService.getAllApplications());
+        }  catch (ApiException e) {
+            log.error(e.getMessage(), e);
+            return HttpResponse.serverError();
         }
     }
 

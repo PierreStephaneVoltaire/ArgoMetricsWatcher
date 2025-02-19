@@ -2,7 +2,7 @@ package ca.psvoltaire.service;
 
 import ca.psvoltaire.dto.ArgoApplication;
 import ca.psvoltaire.dto.ArgoApplicationList;
-import ca.psvoltaire.repository.KubernetesClientFactory;
+import ca.psvoltaire.Clients.KubernetesClientFactory;
 import com.google.gson.Gson;
 import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
@@ -32,6 +32,7 @@ public class ArgoService {
         this.customObjectsApi = clientFactory.customObjectsApi();
         this.coreV1Api = clientFactory.coreV1Api();
         this.gson = new Gson();
+        logger.info("Custom objects API");
 
     }
 
