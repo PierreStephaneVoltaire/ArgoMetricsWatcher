@@ -22,6 +22,12 @@ kafka:
     create: true
   rbac:
     create: true
+  externalAccess:
+    enabled: true
+    service:
+      type: LoadBalancer
+    autoDiscovery:
+      enabled: true
 
 zookeeper:
   replicas: 3
