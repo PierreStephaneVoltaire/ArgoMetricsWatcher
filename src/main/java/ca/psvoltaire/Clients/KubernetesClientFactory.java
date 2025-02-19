@@ -14,7 +14,6 @@ import java.io.IOException;
 
 @Slf4j
 @Singleton
-@Requires(property = "islocal", value = "true")
 
 public class KubernetesClientFactory {
     private final ApiClient client;
