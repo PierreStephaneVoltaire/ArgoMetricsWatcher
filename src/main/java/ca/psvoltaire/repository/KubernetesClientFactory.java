@@ -13,7 +13,7 @@ public class KubernetesClientFactory {
 
     public KubernetesClientFactory() {
         try {
-            this.client = Config.defaultClient();
+            this.client = Config.fromCluster();
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to initialize Kubernetes client", e);
